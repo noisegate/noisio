@@ -7,16 +7,6 @@
 
 import noisio
 
-class Input(object):
-
-    def __repr__(cls):
-        return "Input"
-
-class Output(object):
-
-    def __repr__(cls):
-        return "Output"
-
 class Uniton(type):
     #__instance = None
     def __init__(self, *args, **kwargs):
@@ -63,7 +53,7 @@ class Pin(object):
                       Pin interrupt: {6}\n
                       Pin callback functions: {7}\n
                    """
-        return message.format(self.nr, self._io, self._state,"NIY","NIY","NIY","NIY","NIY")
+        return message.format(self.nr, self._io, self._state, self._pud,"NIY","NIY","NIY","NIY")
 
     @property
     def input(self):
