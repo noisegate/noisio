@@ -43,6 +43,7 @@ class Pin(object):
         self.nr = nr
         self._io = None
         self._state = None
+        self._pud = None
 
     @classmethod
     def pins(cls):
@@ -67,20 +68,37 @@ class Pin(object):
     @property
     def input(self):
         self._io = "input"
+        noisio.input(self.nr)
 
     @property
     def output(self):
         self._io = "output"
+        noisio.output(self.nr)
 
     @property
     def high(self):
-        noisio.set(self.nr)
-        self._state = "high"
+        if (self._io == "output"):
+            noisio.set(self.nr)
+            self._state = "high"
+        else:
+            raise RuntimeError("trying to set pin {0} high, while it is not set as output".format(self.nr))
 
     @property
     def low(self):
-        noisio.clear(self.nr)
-        self._sate = "low"
+        if (self._io == "output"):
+            noisio.clear(self.nr)
+            self._state = "low"
+        else:
+            raise RuntimeError("trying to set pin {0} high, while it is not set as output".format(self.nr))
+    
+    @property
+    def pullup(self):
+        noisio.pullup(self.nr)
+
+    @property
+    def pulldown(self):
+        noisio.pulldown(self.nr)
+
 
 class Nio(object):
 
