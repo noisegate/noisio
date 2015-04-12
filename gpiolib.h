@@ -2,6 +2,8 @@
 #define __GPIOLIB_H__
 extern void test(void);
 extern int init(void);
+extern int libinput(int pinnr);
+extern int liboutput(int pinnr);
 extern int libset(int pinnr);
 extern int libclear(int pinnr);
 extern int libget(int pinnr);

@@ -1,1 +1,1 @@
-while :; do gpio set 23;sleep 1;gpio clr 23;sleep 1; done
+while :; do noiseclio set 23;sleep 1;noiseclio clr 23;sleep 1; done

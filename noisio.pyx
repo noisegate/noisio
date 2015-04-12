@@ -1,6 +1,8 @@
 cdef extern from "gpiolib.h":
     void test()
     int init()
+    int libinput(int pinnr)
+    int liboutput(int pinnr)
     int libset(int pinnr)
     int libclear(int pinnr)
     int libget(int pinnr)
@@ -13,6 +15,12 @@ def testme():
 
 def initialize():
     return init()
+
+def input(pinnr):
+    return libinput(pinnr)
+
+def output(pinnr):
+    return liboutput(pinnr)
 
 def set(pinnr):
     return libset(pinnr)

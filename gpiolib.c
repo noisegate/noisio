@@ -17,6 +17,17 @@ int init(){
 	return 0;
 }
 
+int libinput(int pinnr){
+	INP_GPIO(pinnr);
+	return 0;
+}
+
+int liboutput(int pinnr){
+	INP_GPIO(pinnr);
+	OUT_GPIO(pinnr);
+	return 0;
+}
+
 int libset(int pinnr){
 	INP_GPIO(pinnr);
 	OUT_GPIO(pinnr);

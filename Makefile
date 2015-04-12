@@ -1,4 +1,4 @@
-all: gpio noisio.so testc
+all: RPI.o gpiolib.o noiseclio noisio.so testc
 
 noisio.c: noisio.pyx
 	cython noisio.pyx
@@ -15,11 +15,11 @@ noisio.so: gpiolib.o noisio.o RPI.o
 RPI.o: RPI.c RPI.h
 	gcc -g -O2 -o RPI.o -c RPI.c -I.
 
-gpio: gpio.c RPI.o
-	gcc -o gpio gpio.c RPI.o
+noiseclio: noiseclio.c RPI.o gpiolib.o
+	gcc -g -o noiseclio noiseclio.c RPI.o gpiolib.o -I.
 
 testc: testc.c gpiolib.o
 	gcc -g -o testc testc.c gpiolib.o RPI.o -I.
 
 clean: 
-	rm gpio RPI.o
+	rm noiseclio gpiolib.o noisio.o noisio.so noisio.c RPI.o
