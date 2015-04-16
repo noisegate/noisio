@@ -10,5 +10,8 @@ extern int libget(int pinnr);
 extern int libpullup(int pinnr);
 extern int libpulldown(int pinnr);
 extern int libpulloff(int pinnr);
+extern int libirq(void);
+extern int libstopirq(void);
+extern void testpython(void);
 #endif //__GPIOLIB_H__
 

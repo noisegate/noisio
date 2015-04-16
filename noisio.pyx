@@ -9,6 +9,9 @@ cdef extern from "gpiolib.h":
     int libpullup(int pinnr)
     int libpulldown(int pinnr)
     int libpulloff(int pinnr)
+    int libirq()
+    int libstopirq()
+    void testpython()
 
 def testme():
     test()
@@ -40,3 +43,11 @@ def pulldown(pinnr):
 def pulloff(pinnr):
     return libpulloff(pinnr)
 
+def irq():
+    return libirq()
+
+def stopirq():
+    return libstopirq()
+
+def python():
+    testpython()

@@ -89,6 +89,9 @@ class Pin(object):
     def pulldown(self):
         noisio.pulldown(self.nr)
 
+    @property
+    def state(self):
+        return noisio.get(self.nr)
 
 class Nio(object):
 
