@@ -11,7 +11,8 @@ cdef extern from "gpiolib.h":
     int libpulloff(int pinnr)
     int libirq()
     int libstopirq()
-    void testpython()
+    ctypedef void (*irqfunction)(void *f)
+    void libirqcallback(irqfunction user_func, void *f)
 
 def testme():
     test()
@@ -49,5 +50,8 @@ def irq():
 def stopirq():
     return libstopirq()
 
-def python():
-    testpython()
+def irqcallback(f):
+    libirqcallback(callback, <void*>f)
+
+cdef void callback(void *f):
+    (<object>f)()

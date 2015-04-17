@@ -12,6 +12,7 @@ extern int libpulldown(int pinnr);
 extern int libpulloff(int pinnr);
 extern int libirq(void);
 extern int libstopirq(void);
-extern void testpython(void);
+typedef void (*irqfunction)();
+void libirqcallback(irqfunction user_func, void *f);
 #endif //__GPIOLIB_H__
 
