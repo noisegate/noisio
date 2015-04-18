@@ -18,9 +18,9 @@ cdef extern from "gpiolib.h":
     int libpullup(int pinnr)
     int libpulldown(int pinnr)
     int libpulloff(int pinnr)
-    int libirq()
-    int libstopirq()
-    void libirqcallback(irqfunction user_func, void *f)
+    int libfen(int pinnr)
+    int libfed(int pinnr)
+    void libirqcallback(irqfunction user_func, void *f, int pinnr)
 
 def testme():
     test()
@@ -52,16 +52,14 @@ def pulldown(pinnr):
 def pulloff(pinnr):
     return libpulloff(pinnr)
 
-def irq():
-    return libirq()
+def fen(pinnr):
+    return libfen(pinnr)
 
-def stopirq():
-    return libstopirq()
+def fed(pinnr):
+    return libfed(pinnr)
 
-def irqcallback(f):
-    libirqcallback(callback, <void*>f)
-    print "it came back"
-
+def irqcallback(f, pinnr):
+    libirqcallback(callback, <void*>f, pinnr)
+ 
 cdef void callback(void *f) with gil:
-    print "in the cdef"
     (<object>f)()

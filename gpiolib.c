@@ -5,9 +5,16 @@
 
 //usersruff
 //yi
+/* Noisegates GERT & DOM-way lib for cython
+ *
+ */
+
 
 void test(){
 	printf("This is a simple test, Hello World from c\n");
+	printf("contents of GPEDS0/1: %i, %i\n", GPIO_GPEDS0, GPIO_GPEDS1);
+	GPIO_GPEDS0 = 0b00000000000000000000000000000000;
+
 }
 
 int init(){
@@ -113,60 +120,50 @@ int libpulloff(int pinnr){
 	}
 }
 
-void *Threadtest(void *threadid){
-	//long i = (long) threadid;i
-	int i;
-	for(;;){//while((long)threadid==0)
-		//i = (long) threadid;
-		printf("button state %i and id = %i\n", libget(24), 1);
-		//if (threadid==1) goto stopthis;
-		usleep(2000000);
-	}
-	pthread_exit(NULL);
-}
-
-int libirq(){
-	int rc;
-	long t;
-	pthread_t thread;
-	rc = pthread_create(&thread, NULL, Threadtest, (void *)t);
-	if (rc){
-		printf("ERROR");
-		exit(-1);
-	}
-	//pthread_exit(NULL);
+int libfen(int pinnr){
+	//falling edge detect enable...
+	GPIO_GPFEN0 = 1<<pinnr;
 	return 0;
 }
 
-int libstopirq(){
+int libfed(int pinnr){
+	GPIO_GPFEN0 = 0b00000000000000000000000000000000;
 	return 0;
 }
+
 
 void *irqthread(void *data){
 	struct thread_data *my_data;
+	int pinnr;
 	irqfunction usr_fn;
 	void* f;
 
 	my_data = (struct thread_data *)data;
+	pinnr = my_data->pinnr;
 	usr_fn = (irqfunction)my_data->user_fun;
 	f = my_data->f;
 
 	for (;;){
 		usleep(1000);
-		if (libget(24)==0)
+		if (libget(pinnr)==0)
 			usr_fn(f);
 	}
 	pthread_exit(NULL);
 }
 
-void libirqcallback(irqfunction user_func, void *f){
+void libirqcallback(irqfunction user_func, void *f, int pinnr){
 	int rc;
 	long id;
-	printf("in callbackfctn: usr_fun %p  f=%p\n", user_func, f);
+	static count = 0;
 
-	user_func(f);
-	//pthread_t thread;
+	count++;
+
+	if (count>1){
+		printf ("No more pins!!\n");
+		return;
+	}	
 	mythreaddata.id = 1;
+	mythreaddata.pinnr = pinnr;
 	mythreaddata.user_fun = user_func;
 	mythreaddata.f = f;
 	rc=pthread_create(&thread, NULL, irqthread, (void*)&mythreaddata);
