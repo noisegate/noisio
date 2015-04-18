@@ -17,6 +17,7 @@
 	extern int libset(int pinnr);
 	extern int libclear(int pinnr);
 	extern int libget(int pinnr);
+	extern int libed(int pinnr);
 	extern int libpullup(int pinnr);
 	extern int libpulldown(int pinnr);
 	extern int libpulloff(int pinnr);

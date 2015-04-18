@@ -13,7 +13,7 @@
 void test(){
 	printf("This is a simple test, Hello World from c\n");
 	printf("contents of GPEDS0/1: %i, %i\n", GPIO_GPEDS0, GPIO_GPEDS1);
-	GPIO_GPEDS0 = 0b00000000000000000000000000000000;
+	GPIO_GPEDS0 = 1<<24;
 
 }
 
@@ -61,6 +61,15 @@ int libget(int pinnr){
 	}else
 		return 0;
 
+}
+
+int libed(int pinnr){
+	//read teh event detect register
+	//ed = event detect
+	if((GPIO_GPEDS0 & (1<<pinnr))==(1<<pinnr))
+		return 1;
+	else
+		return 0;
 }
 
 int libpullup(int pinnr){
@@ -144,9 +153,11 @@ void *irqthread(void *data){
 	f = my_data->f;
 
 	for (;;){
-		usleep(1000);
-		if (libget(pinnr)==0)
+		if (libed(pinnr)==1){
 			usr_fn(f);
+			GPIO_GPEDS0 |= (1<<pinnr);//clear flag
+		}
+		usleep(1000);
 	}
 	pthread_exit(NULL);
 }
