@@ -1,4 +1,13 @@
 cdef extern from "gpiolib.h":
+
+    ctypedef void (*irqfunction)(void *f)
+
+    struct thread_data:
+        int id
+        int pinnr
+        irqfunction user_fun
+        void *f
+
     void test()
     int init()
     int libinput(int pinnr)
@@ -11,7 +20,6 @@ cdef extern from "gpiolib.h":
     int libpulloff(int pinnr)
     int libirq()
     int libstopirq()
-    ctypedef void (*irqfunction)(void *f)
     void libirqcallback(irqfunction user_func, void *f)
 
 def testme():
@@ -52,6 +60,8 @@ def stopirq():
 
 def irqcallback(f):
     libirqcallback(callback, <void*>f)
+    print "it came back"
 
-cdef void callback(void *f):
+cdef void callback(void *f) with gil:
+    print "in the cdef"
     (<object>f)()

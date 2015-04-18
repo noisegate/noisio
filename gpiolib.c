@@ -142,8 +142,34 @@ int libstopirq(){
 	return 0;
 }
 
+void *irqthread(void *data){
+	struct thread_data *my_data;
+	irqfunction usr_fn;
+	void* f;
+
+	my_data = (struct thread_data *)data;
+	usr_fn = (irqfunction)my_data->user_fun;
+	f = my_data->f;
+
+	for (;;){
+		usleep(1000);
+		if (libget(24)==0)
+			usr_fn(f);
+	}
+	pthread_exit(NULL);
+}
+
 void libirqcallback(irqfunction user_func, void *f){
+	int rc;
+	long id;
+	printf("in callbackfctn: usr_fun %p  f=%p\n", user_func, f);
 
 	user_func(f);
+	//pthread_t thread;
+	mythreaddata.id = 1;
+	mythreaddata.user_fun = user_func;
+	mythreaddata.f = f;
+	rc=pthread_create(&thread, NULL, irqthread, (void*)&mythreaddata);
+	//pthread_exit(NULL);
 }
 
