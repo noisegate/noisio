@@ -34,6 +34,10 @@ class Pin(object):
         self._io = None
         self._state = None
         self._pud = None
+        self._re = ""
+        self._fe = ""
+        self._callbackfun = None
+        self._interrupt = None
 
     @classmethod
     def pins(cls):
@@ -43,17 +47,27 @@ class Pin(object):
     def __repr__(self):
 
         message = """
-                      Pin Object Status:\n
-                      Pin Nr: {0}\n
-                      Pin communication: {1}\n
-                      Pin sate: {2}\n
-                      Pin PUD: {3}\n
-                      Pin Schmidt: {4}\n
-                      Pin Alternate functions: {5}\n
-                      Pin interrupt: {6}\n
-                      Pin callback functions: {7}\n
+                      Pin Object Status:
+                      Pin Nr:                  {0}
+                      Pin communication:       {1}
+                      Pin sate:                {2}
+                      Pin PUD:                 {3}
+                      Pin Schmidt:             {4}
+                      Pin Alternate functions: {5}
+                      Pin Events:              {6}
+                      Pin interrupt:           {7}
+                      Pin callback functions:  {8}
                    """
-        return message.format(self.nr, self._io, self._state, self._pud,"NIY","NIY","NIY","NIY")
+        return message.format(
+                                self.nr, 
+                                self._io, 
+                                self._state, 
+                                self._pud,
+                                "NIY",
+                                "NIY",
+                                ", ".join([self._re,self._fe]),
+                                self._interrupt,
+                                self._callbackfun)
 
     @property
     def input(self):
@@ -83,11 +97,42 @@ class Pin(object):
     
     @property
     def pullup(self):
+        self._pud = "Pull Up"
         noisio.pullup(self.nr)
 
     @property
     def pulldown(self):
+        self._pud = "Pull Down"
         noisio.pulldown(self.nr)
+
+    @property
+    def falling_edge_detect_enable(self):
+        self._fe = "Falling edge detect"
+        noisio.fen(self.nr)
+
+    @property
+    def rising_edge_detect_enable(self):
+        self._re = "Rising edge detect"
+        noisio.ren(self.nr)
+
+    @property
+    def falling_edge_detect_disable(self):
+        self._fe= " "
+        noisio.fed(self.nr)
+
+    @property
+    def rising_edge_detect_disable(self):
+        self._re = " "
+        noisio.red(self.nr)
+
+    @property
+    def callback(self):
+        return self.callback
+
+    @callback.setter
+    def callback(self, function):
+        noisio.irqcallback(function, self.nr)
+        self._callbackfun = function
 
     @property
     def state(self):

@@ -23,6 +23,8 @@
 	extern int libpulloff(int pinnr);
 	extern int libfen(int pinnr);
 	extern int libfed(int pinnr);
+	extern int libren(int pinnr);
+	extern int libred(int pinnr);
 	extern void *irqthread(void *data);
 	extern void libirqcallback(irqfunction user_func, void *f, int pinnr);
 #endif //__GPIOLIB_H__

@@ -144,14 +144,14 @@ int libfed(int pinnr){
 
 int libren(int pinnr){
 	//Rising Edge detect Enable
-	//NYI
-	return -1;
+	GPIO_GPREN0 |=(1<<pinnr);
+	return 0;
 }
 
 int libred(int pinnr){
 	//Rising Edge detect Disable
-	//NYI
-	return -1;
+	GPIO_GPREN0 &= ~(1<<pinnr);
+	return 0;
 }
 
 void *irqthread(void *data){
@@ -191,11 +191,13 @@ void libirqcallback(irqfunction user_func, void *f, int pinnr){
 	for (i=0;i<count;i++){
 		if (mythreaddata[i].pinnr == pinnr){
 			printf("Already ISR on this pin\n");
+			printf("re-assigning callback fction\n");
+			mythreaddata[count].f = f;
 			return;
 		}
 	}
 
-	mythreaddata[count].id = 1;
+	mythreaddata[count].id = count;
 	mythreaddata[count].pinnr = pinnr;
 	mythreaddata[count].user_fun = user_func;
 	mythreaddata[count].f = f;
