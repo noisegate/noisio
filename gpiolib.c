@@ -166,6 +166,10 @@ void *irqthread(void *data){
 	f = my_data->f;
 
 	for (;;){
+		if (my_data->message==(int)1){
+			printf("received thread message\n");
+			my_data->message = 0;
+		}
 		if (libed(pinnr)==1){
 			usr_fn(f);
 			GPIO_GPEDS0 |= (1<<pinnr);//clear flag
@@ -192,6 +196,7 @@ void libirqcallback(irqfunction user_func, void *f, int pinnr){
 		if (mythreaddata[i].pinnr == pinnr){
 			printf("Already ISR on this pin\n");
 			printf("re-assigning callback fction\n");
+			mythreaddata[count].message=1;
 			mythreaddata[count].f = f;
 			return;
 		}
@@ -199,6 +204,7 @@ void libirqcallback(irqfunction user_func, void *f, int pinnr){
 
 	mythreaddata[count].id = count;
 	mythreaddata[count].pinnr = pinnr;
+	mythreaddata[count].message = 0;
 	mythreaddata[count].user_fun = user_func;
 	mythreaddata[count].f = f;
 	rc=pthread_create(&thread[count], NULL, irqthread, (void*)&mythreaddata[count]);

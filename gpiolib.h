@@ -6,6 +6,7 @@
 	extern struct thread_data{
 		int id;
 		int pinnr;
+		int message;
 		irqfunction user_fun;
 		void *f;
 	};
