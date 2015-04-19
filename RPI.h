@@ -10,11 +10,16 @@
 //
 #define BCM2708_PERI_BASE	0x3f000000
 #define GPIO_BASE		0x3f200000
+
+#define GPEDS0			0x00000040
+#define GPEDS1			0x00000044
+#define GPREN0                  0x0000004c
+#define GPREN1			0x00000050
+#define GPFEN0			0x00000058
+#define GPFEN1			0x0000005c
 #define GPPUD			0x00000094
 #define GPPUDCLK0		0x00000098
 #define GPPUDCLK1		0x0000009c
-#define GPEDS0			0x00000040
-#define GPEDS1			0x00000044
 
 #define BLOCK_SIZE		(4*1024)
 
@@ -46,5 +51,8 @@ void unmap_peripheral(struct bcm2835_peripheral *p);
 #define GPIO_PUDCLK1 *(gpio.addr + 0x9c/4)
 #define GPIO_GPEDS0 *(gpio.addr + 0x40/4)
 #define GPIO_GPEDS1 *(gpio.addr + 0x44/4)
-#define GPIO_GPFEN0 *(gpio.addr + 0x58/4)
-#define GPIO_GPFEN1 *(gpio.addr + 0x5c/4)
+#define GPIO_GPFEN0 *(gpio.addr + GPFEN0/4)
+#define GPIO_GPFEN1 *(gpio.addr + GPFEN1/4)
+#define GPIO_GPREN0 *(gpio.addr + GPREN0/4)
+#define GPIO_GPREN1 *(gpio.addr + GPREN1/4)
+

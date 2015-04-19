@@ -8,7 +8,8 @@
 /* Noisegates GERT & DOM-way lib for cython
  *
  */
-
+pthread_t thread[32];//for tha moment
+struct thread_data mythreaddata[32];
 
 void test(){
 	printf("This is a simple test, Hello World from c\n");
@@ -75,17 +76,17 @@ int libed(int pinnr){
 int libpullup(int pinnr){
 	if (pinnr<33){
 		GPIO_PUD = 0b00000000000000000000000000000010;
-		sleep(1);
+		usleep(150);
 		GPIO_PUDCLK0 = 1<<pinnr;
-		sleep(1);
+		usleep(150);
 		GPIO_PUD = 0b00000000000000000000000000000000;
 		GPIO_PUDCLK0 = 1<<pinnr;
 	}else{
 		//this might be totaly wrong...
 		GPIO_PUD = 0b00000000000000000000000000000010;
-		sleep(1);
+		usleep(150);
 		GPIO_PUDCLK1 = 1<<pinnr;
-		sleep(1);
+		usleep(150);
 		GPIO_PUD = 0b00000000000000000000000000000000;
 		GPIO_PUDCLK1 = 1<<pinnr;
 	}
@@ -130,16 +131,28 @@ int libpulloff(int pinnr){
 }
 
 int libfen(int pinnr){
-	//falling edge detect enable...
-	GPIO_GPFEN0 = 1<<pinnr;
+	//Falling Edge detect eNable...
+	GPIO_GPFEN0 |= (1<<pinnr);
 	return 0;
 }
 
 int libfed(int pinnr){
-	GPIO_GPFEN0 = 0b00000000000000000000000000000000;
+	//Falling Edge detect Disable
+	GPIO_GPFEN0 &= ~(1<<pinnr);
 	return 0;
 }
 
+int libren(int pinnr){
+	//Rising Edge detect Enable
+	//NYI
+	return -1;
+}
+
+int libred(int pinnr){
+	//Rising Edge detect Disable
+	//NYI
+	return -1;
+}
 
 void *irqthread(void *data){
 	struct thread_data *my_data;
@@ -166,18 +179,28 @@ void libirqcallback(irqfunction user_func, void *f, int pinnr){
 	int rc;
 	long id;
 	static count = 0;
+	int i;
 
-	count++;
+	printf ("Thread number %i started for pin %i ISR\n", count, pinnr);
 
-	if (count>1){
+	if (count>32){
 		printf ("No more pins!!\n");
 		return;
 	}	
-	mythreaddata.id = 1;
-	mythreaddata.pinnr = pinnr;
-	mythreaddata.user_fun = user_func;
-	mythreaddata.f = f;
-	rc=pthread_create(&thread, NULL, irqthread, (void*)&mythreaddata);
+	
+	for (i=0;i<count;i++){
+		if (mythreaddata[i].pinnr == pinnr){
+			printf("Already ISR on this pin\n");
+			return;
+		}
+	}
+
+	mythreaddata[count].id = 1;
+	mythreaddata[count].pinnr = pinnr;
+	mythreaddata[count].user_fun = user_func;
+	mythreaddata[count].f = f;
+	rc=pthread_create(&thread[count], NULL, irqthread, (void*)&mythreaddata[count]);
+	count++;
 	//pthread_exit(NULL);
 }
 

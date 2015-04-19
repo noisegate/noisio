@@ -25,9 +25,5 @@
 	extern int libfed(int pinnr);
 	extern void *irqthread(void *data);
 	extern void libirqcallback(irqfunction user_func, void *f, int pinnr);
-
-	struct thread_data mythreaddata;
-pthread_t thread;
-
 #endif //__GPIOLIB_H__
 
