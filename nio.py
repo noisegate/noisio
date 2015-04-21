@@ -131,6 +131,10 @@ class Pin(object):
 
     @callback.setter
     def callback(self, function):
+        if (function is None):
+            noisio.delirqcallback(self.nr)
+            return
+
         noisio.irqcallback(function, self.nr)
         self._callbackfun = function
 

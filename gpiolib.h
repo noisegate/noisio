@@ -28,5 +28,8 @@
 	extern int libred(int pinnr);
 	extern void *irqthread(void *data);
 	extern void libirqcallback(irqfunction user_func, void *f, int pinnr);
+	extern void libdelirqcallback(int pinnr);
 #endif //__GPIOLIB_H__
+#define THREAD_MSG_EXIT 2
+#define THREAD_MSG_REASSIGN 1
 

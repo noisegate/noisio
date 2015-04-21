@@ -24,6 +24,7 @@ cdef extern from "gpiolib.h":
     int libren(int pinnr)
     int libred(int pinnr)
     void libirqcallback(irqfunction user_func, void *f, int pinnr)
+    void libdelirqcallback(int pinnr)
 
 def testme():
     test()
@@ -69,6 +70,9 @@ def red(pinnr):
 
 def irqcallback(f, pinnr):
     libirqcallback(callback, <void*>f, pinnr)
- 
+
+def delirqcallback(pinnr):
+    libdelirqcallback(pinnr)
+
 cdef void callback(void *f) with gil:
     (<object>f)()

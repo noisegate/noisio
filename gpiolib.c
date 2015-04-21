@@ -166,10 +166,11 @@ void *irqthread(void *data){
 	f = my_data->f;
 
 	for (;;){
-		if (my_data->message==(int)1){
-			printf("received thread message\n");
+		if (my_data->message==THREAD_MSG_REASSIGN){
+			f = my_data->f;
 			my_data->message = 0;
 		}
+		if (my_data->message==THREAD_MSG_EXIT) break;
 		if (libed(pinnr)==1){
 			usr_fn(f);
 			GPIO_GPEDS0 |= (1<<pinnr);//clear flag
@@ -179,36 +180,34 @@ void *irqthread(void *data){
 	pthread_exit(NULL);
 }
 
+void libdelirqcallback(int pinnr){
+	int i;
+	mythreaddata[pinnr].id =0;//free it up
+	mythreaddata[pinnr].message = THREAD_MSG_EXIT;
+}
+
 void libirqcallback(irqfunction user_func, void *f, int pinnr){
 	int rc;
 	long id;
-	static count = 0;
 	int i;
 
-	printf ("Thread number %i started for pin %i ISR\n", count, pinnr);
-
-	if (count>32){
-		printf ("No more pins!!\n");
+	if ((pinnr<0)||(pinnr>32)){
+		printf ("FATAL:Illegal pinnr!!\n");
 		return;
 	}	
 	
-	for (i=0;i<count;i++){
-		if (mythreaddata[i].pinnr == pinnr){
-			printf("Already ISR on this pin\n");
-			printf("re-assigning callback fction\n");
-			mythreaddata[count].message=1;
-			mythreaddata[count].f = f;
-			return;
-		}
+	if (mythreaddata[pinnr].id == 1){
+		mythreaddata[pinnr].f = f;
+		mythreaddata[pinnr].message=THREAD_MSG_REASSIGN;
+		return;
 	}
 
-	mythreaddata[count].id = count;
-	mythreaddata[count].pinnr = pinnr;
-	mythreaddata[count].message = 0;
-	mythreaddata[count].user_fun = user_func;
-	mythreaddata[count].f = f;
-	rc=pthread_create(&thread[count], NULL, irqthread, (void*)&mythreaddata[count]);
-	count++;
+	mythreaddata[pinnr].id = 1;
+	mythreaddata[pinnr].pinnr = pinnr;
+	mythreaddata[pinnr].message = 0;
+	mythreaddata[pinnr].user_fun = user_func;
+	mythreaddata[pinnr].f = f;
+	rc=pthread_create(&thread[pinnr], NULL, irqthread, (void*)&mythreaddata[pinnr]);
 	//pthread_exit(NULL);
 }
 
