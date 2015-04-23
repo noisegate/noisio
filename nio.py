@@ -6,6 +6,7 @@
 """
 
 import noisio
+import data
 
 class Uniton(type):
     #__instance = None
@@ -126,6 +127,18 @@ class Pin(object):
         noisio.red(self.nr)
 
     @property
+    def high_level_detect_enable(self):
+        noisio.hen(self.nr)
+
+    @property
+    def high_level_detect_disable(self):
+        noisio.hed(self.nr)
+
+    @property
+    def schmitt(self):
+        noisio.hysen()#hysterisys enable = Schmitt
+
+    @property
     def callback(self):
         return self.callback
 
@@ -138,6 +151,16 @@ class Pin(object):
         noisio.irqcallback(function, self.nr)
         self._callbackfun = function
 
+
+    @property
+    def toggle(self):
+        if (noisio.get(self.nr)==1):
+            self.low
+            self._state = "low"
+        else:
+            self.high
+            self._state = "high"
+
     @property
     def state(self):
         return noisio.get(self.nr)
@@ -147,4 +170,7 @@ class Nio(object):
     def __init__(self):
         pass
 
-
+    @classmethod
+    def layout(self):
+        data.Pindata.pinout()
+        

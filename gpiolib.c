@@ -25,6 +25,10 @@ int init(){
 		printf ("Failed to map physical GPIO regzz to virt mem\n");
 		return -1;
 	}
+	if (map_peripheral(&gpioctrl)){
+		printf("Failed to map GPIO control pads to v meme\n");	
+		return -1;
+	}
 	return 0;
 }
 
@@ -154,6 +158,25 @@ int libred(int pinnr){
 	return 0;
 }
 
+int libhen(int pinnr){
+	//
+	GPIO_GPHEN0 |=(1<<pinnr);
+	return 0;
+}
+
+int libhed(int pinnr){
+	//
+	GPIO_GPHEN0 &=~(1<<pinnr);
+	return 0;
+}
+
+int libhysen(){
+	GPIOCTRL_PADS0 = (0x5a<<23);
+	GPIOCTRL_PADS0 |=(1<<3);
+	
+	return 0;
+}
+
 void *irqthread(void *data){
 	struct thread_data *my_data;
 	int pinnr;
@@ -166,17 +189,21 @@ void *irqthread(void *data){
 	f = my_data->f;
 
 	for (;;){
-		if (my_data->message==THREAD_MSG_REASSIGN){
-			f = my_data->f;
-			my_data->message = 0;
+		if (my_data->message!=0){
+			if (my_data->message==THREAD_MSG_REASSIGN){
+				f = my_data->f;
+				my_data->message = 0;
+			}
+			if (my_data->message==THREAD_MSG_EXIT) goto threadexit;
+		}else{
+			if (libed(pinnr)==1){
+				usr_fn(f);
+				GPIO_GPEDS0 |= (1<<pinnr);//clear flag
+			}
+			usleep(1000);
 		}
-		if (my_data->message==THREAD_MSG_EXIT) break;
-		if (libed(pinnr)==1){
-			usr_fn(f);
-			GPIO_GPEDS0 |= (1<<pinnr);//clear flag
-		}
-		usleep(1000);
 	}
+threadexit:	
 	pthread_exit(NULL);
 }
 

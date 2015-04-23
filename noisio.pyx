@@ -23,6 +23,9 @@ cdef extern from "gpiolib.h":
     int libfed(int pinnr)
     int libren(int pinnr)
     int libred(int pinnr)
+    int libhen(int pinnr)
+    int libhed(int pinnr)
+    int libhysen()
     void libirqcallback(irqfunction user_func, void *f, int pinnr)
     void libdelirqcallback(int pinnr)
 
@@ -67,6 +70,15 @@ def ren(pinnr):
 
 def red(pinnr):
     return libred(pinnr)
+
+def hen(pinnr):
+    return libhen(pinnr)
+
+def hed(pinnr):
+    return libhed(pinnr)
+
+def hysen():
+    return libhysen()
 
 def irqcallback(f, pinnr):
     libirqcallback(callback, <void*>f, pinnr)

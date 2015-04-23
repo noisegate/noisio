@@ -1,6 +1,7 @@
 #include "RPI.h"
 
 struct bcm2835_peripheral gpio = {GPIO_BASE};
+struct bcm2835_peripheral gpioctrl = {GPIO_PAD};
 
 int map_peripheral(struct bcm2835_peripheral *p) {
 	//Open /dev/mem
