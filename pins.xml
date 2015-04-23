@@ -1,0 +1,245 @@
+<?xml version="1.0"?>
+
+<board>
+	<pin nr="1">
+		<gpio>1</gpio>
+		<function>3.3V</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="2">
+		<gpio>1</gpio>
+		<function>5V</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="3">
+		<gpio>2</gpio>
+		<function>GPIO2</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="4">
+		<gpio>1</gpio>
+		<function>5V</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="5">
+		<gpio>1</gpio>
+		<function>GPIO3</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="6">
+		<gpio>1</gpio>
+		<function>GND</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="7">
+		<gpio>1</gpio>
+		<function>GPIO4</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="8">
+		<gpio>1</gpio>
+		<function>GPIO14</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="9">
+		<gpio>1</gpio>
+		<function>GND</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="10">
+		<gpio>1</gpio>
+		<function>GPIO15</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="11">
+		<gpio>1</gpio>
+		<function>GPIO17</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="12">
+		<gpio>1</gpio>
+		<function>GPIO18</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="13">
+		<gpio>1</gpio>
+		<function>GPIO27</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="14">
+		<gpio>1</gpio>
+		<function>GND</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="15">
+		<gpio>1</gpio>
+		<function>GPIO22</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="16">
+		<gpio>1</gpio>
+		<function>GPIO23</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="17">
+		<gpio>1</gpio>
+		<function>3.3V</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="18">
+		<gpio>1</gpio>
+		<function>GPIO24</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="19">
+		<gpio>1</gpio>
+		<function>gpio10</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="20">
+		<gpio>1</gpio>
+		<function>GND</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="21">
+		<gpio>1</gpio>
+		<function>GPIO9</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="22">
+		<gpio>1</gpio>
+		<function>GPIO25</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="23">
+		<gpio>1</gpio>
+		<function>GPIO11</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="24">
+		<gpio>1</gpio>
+		<function>GPIO8</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="25">
+		<gpio>1</gpio>
+		<function>GND</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="26">
+		<gpio>1</gpio>
+		<function>GPIO7</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="27">
+		<gpio>1</gpio>
+		<function>DNC</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="28">
+		<gpio>1</gpio>
+		<function>DNC</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="29">
+		<gpio>1</gpio>
+		<function>GPIO5</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="30">
+		<gpio>1</gpio>
+		<function>GND</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="31">
+		<gpio>1</gpio>
+		<function>GPIO6</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="32">
+		<gpio>1</gpio>
+		<function>GPIO12</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="33">
+		<gpio>1</gpio>
+		<function>GPIO13</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="34">
+		<gpio>1</gpio>
+		<function>GND</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="35">
+		<gpio>1</gpio>
+		<function>GPIO19</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="36">
+		<gpio>1</gpio>
+		<function>GPIO16</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="37">
+		<gpio>1</gpio>
+		<function>GPIO26</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="38">
+		<gpio>1</gpio>
+		<function>GPIO20</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="39">
+		<gpio>1</gpio>
+		<function>GND</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+	<pin nr="40">
+		<gpio>1</gpio>
+		<function>GPIO21</function>
+		<alt1></alt1>
+		<alt2></alt2>
+	</pin>
+</board>
+
