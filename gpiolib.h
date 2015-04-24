@@ -28,7 +28,10 @@
 	extern int libred(int pinnr);
 	extern int libhen(int pinnr);
 	extern int libhed(int pinnr);
+	extern int liblen(int pinnr);
+	extern int libled(int pinnr);
 	extern int libhysen();
+	extern int liblowen();
 	extern void *irqthread(void *data);
 	extern void libirqcallback(irqfunction user_func, void *f, int pinnr);
 	extern void libdelirqcallback(int pinnr);

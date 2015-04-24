@@ -135,8 +135,20 @@ class Pin(object):
         noisio.hed(self.nr)
 
     @property
+    def low_level_detect_enable(self):
+        noisio.len(self.nr)
+
+    @property
+    def low_level_detect_disable(self):
+        noisio.led(self.nr)
+
+    @property
     def schmitt(self):
         noisio.hysen()#hysterisys enable = Schmitt
+
+    @property
+    def slow(self):
+        noisio.slowen()#slow edge enable
 
     @property
     def callback(self):

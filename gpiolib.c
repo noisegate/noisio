@@ -170,10 +170,29 @@ int libhed(int pinnr){
 	return 0;
 }
 
+int liblen(int pinnr){
+	//enable low detect
+	GPIO_GPLEN0 |=(1<<pinnr);
+	return 0;
+}
+
+int libled(int pinnr){
+	//enable low detect
+	GPIO_GPLEN0 &=~(1<<pinnr);
+	return 0;
+}
+
 int libhysen(){
-	GPIOCTRL_PADS0 = (0x5a<<23);
+	GPIOCTRL_PADS0 ^= (0xff<24);//clear 8 msb
+	GPIOCTRL_PADS0 |= (0x5a<<24);//set passwd
 	GPIOCTRL_PADS0 |=(1<<3);
-	
+	return 0;
+}
+
+int libslowen(){
+	GPIOCTRL_PADS0 ^= (0xff<24);//clear 8 msb
+	GPIOCTRL_PADS0 |= (0x5a<<24);//set passwd
+	GPIOCTRL_PADS0 |=(1<<4);
 	return 0;
 }
 

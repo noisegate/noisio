@@ -27,6 +27,8 @@
 #define GPFEN1			0x0000005c
 #define GPHEN0			0x00000064
 #define GPHEN1			0x00000068
+#define GPLEN0			0x00000070
+#define GPLEN1			0x00000074
 #define GPPUD			0x00000094
 #define GPPUDCLK0		0x00000098
 #define GPPUDCLK1		0x0000009c
@@ -70,6 +72,8 @@ void unmap_peripheral(struct bcm2835_peripheral *p);
 #define GPIO_GPREN1 *(gpio.addr + GPREN1/4)
 #define GPIO_GPHEN0 *(gpio.addr + GPHEN0/4)
 #define GPIO_GPHEN1 *(gpio.addr + GPHEN1/4)
+#define GPIO_GPLEN0 *(gpio.addr + GPLEN0/4)
+#define GPIO_GPLEN1 *(gpio.addr + GPLEN1/4)
 
 #define GPIOCTRL_PADS0 *(gpioctrl.addr + GPPADS0/4)
 
