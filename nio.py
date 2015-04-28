@@ -102,6 +102,10 @@ class Pin(object):
         noisio.pullup(self.nr)
 
     @property
+    def pulloff(self):
+        noisio.pulloff(self.nr)
+
+    @property
     def pulldown(self):
         self._pud = "Pull Down"
         noisio.pulldown(self.nr)
@@ -144,11 +148,20 @@ class Pin(object):
 
     @property
     def schmitt(self):
-        noisio.hysen()#hysterisys enable = Schmitt
+        noisio.hysen()#hysterisis enable = Schmitt
+
+    @property
+    def noschmitt(self):
+        noisio.hysdis()#disable hysterisis
+
 
     @property
     def slow(self):
         noisio.slowen()#slow edge enable
+
+    @property
+    def fast(self):
+        noisio.fasten()
 
     @property
     def callback(self):
@@ -172,6 +185,11 @@ class Pin(object):
         else:
             self.high
             self._state = "high"
+
+    @property
+    def enabled(self):
+        #is the enable bit set (falling, rising high, low sate dept)
+        return noisio.ed(self.nr)
 
     @property
     def state(self):

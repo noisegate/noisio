@@ -183,16 +183,30 @@ int libled(int pinnr){
 }
 
 int libhysen(){
-	GPIOCTRL_PADS0 ^= (0xff<24);//clear 8 msb
-	GPIOCTRL_PADS0 |= (0x5a<<24);//set passwd
+	GPIOCTRL_PADS0 = (0xff<24);//clear 8 msb
+	GPIOCTRL_PADS0 &= (0x5a<<24);//set passwd
 	GPIOCTRL_PADS0 |=(1<<3);
 	return 0;
 }
 
+int libhysdis(){
+	GPIOCTRL_PADS0 = (0xff<24);//clear 8 msb
+	GPIOCTRL_PADS0 &= (0x5a<<24);//set passwd
+	GPIOCTRL_PADS0 &=(0b11111111111111111111111111110111);
+	return 0;
+}
+
 int libslowen(){
-	GPIOCTRL_PADS0 ^= (0xff<24);//clear 8 msb
-	GPIOCTRL_PADS0 |= (0x5a<<24);//set passwd
+	GPIOCTRL_PADS0 = (0xff<24);//clear 8 msb
+	GPIOCTRL_PADS0 &= (0x5a<<24);//set passwd
 	GPIOCTRL_PADS0 |=(1<<4);
+	return 0;
+}
+
+int libfasten(){
+	GPIOCTRL_PADS0 = (0xff<24);//clear 8 msb
+	GPIOCTRL_PADS0 &= (0x5a<<24);//set passwd
+	GPIOCTRL_PADS0 &=~(1<<4);
 	return 0;
 }
 
@@ -219,7 +233,7 @@ void *irqthread(void *data){
 				usr_fn(f);
 				GPIO_GPEDS0 |= (1<<pinnr);//clear flag
 			}
-			usleep(1000);
+			usleep(10);
 		}
 	}
 threadexit:	

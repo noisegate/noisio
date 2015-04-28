@@ -16,6 +16,7 @@ cdef extern from "gpiolib.h":
     int libset(int pinnr)
     int libclear(int pinnr)
     int libget(int pinnr)
+    int libed(int pinnr)
     int libpullup(int pinnr)
     int libpulldown(int pinnr)
     int libpulloff(int pinnr)
@@ -28,7 +29,9 @@ cdef extern from "gpiolib.h":
     int liblen(int pinnr)
     int libled(int pinnr)
     int libhysen()
+    int libhysdis()
     int libslowen()
+    int libfasten()
     void libirqcallback(irqfunction user_func, void *f, int pinnr)
     void libdelirqcallback(int pinnr)
 
@@ -52,6 +55,9 @@ def clear(pinnr):
 
 def get(pinnr):
     return libget(pinnr)
+
+def ed(pinnr):
+    return libed(pinnr)
 
 def pullup(pinnr):
     return libpullup(pinnr)
@@ -89,8 +95,14 @@ def led(pinnr):
 def hysen():
     return libhysen()
 
+def hysdis():
+    return libhysdis()
+
 def slowen():
     return libslowen()
+
+def fasten():
+    return libfasten()
 
 def irqcallback(f, pinnr):
     libirqcallback(callback, <void*>f, pinnr)

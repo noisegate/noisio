@@ -15,8 +15,8 @@ if __name__ =='__main__':
     button.rising_edge_detect_enable
     button.low_level_detect_disable
     button.high_level_detect_disable
-    button.schmitt    
-    button.slow
+    button.noschmitt    
+    #button.slow
     led = nio.Pin(22)
     led.output
 
